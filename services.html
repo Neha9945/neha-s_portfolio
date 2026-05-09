@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services – Neha Digital Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111;
+            --bg-glass: rgba(255,255,255,0.04);
+            --text-primary: #ffffff;
+            --text-secondary: #b8bcc5;
+            --gold-light: #f8f594;
+            --gold-dark: #d4af37;
+            --gradient-gold: linear-gradient(135deg, #f8f594 0%, #f7e98e 50%, #d4af37 100%);
+            --gradient-subtle: linear-gradient(135deg, rgba(248,245,148,0.1) 0%, rgba(212,175,55,0.05) 100%);
+            --shadow-light: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --shadow-glass: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+            --glow-subtle: 0 0 25px rgba(248,245,148,0.2);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Clash Display', sans-serif;
+            font-weight: 600;
+        }
+
+        /* FLOATING NAV */
+        .floating-nav {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .nav-item {
+            width: 56px;
+            height: 56px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .nav-item::before {
+            content: attr(data-text);
+            position: absolute;
+            right: -180px;
+            top: 50%;
+            transform: translateY(-50%);
+            white-space: nowrap;
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--text-primary);
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 12px 24px;
+            border-radius: 12px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .nav-item:hover {
+            width: 220px;
+            background: var(--gradient-gold);
+            box-shadow: var(--shadow-light), var(--glow-subtle);
+            border-color: transparent;
+        }
+
+        .nav-item:hover::before {
+            right: 20px;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .nav-item i {
+            font-size: 18px;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        .nav-item:hover i { color: #1a1a1a; }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 120px 0;
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 120px;
+            align-items: center;
+        }
+
+        .hero-title {
+            font-size: clamp(4.5rem, 10vw, 7rem);
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 0.9;
+            margin-bottom: 24px;
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            max-width: 500px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 60px;
+            margin-bottom: 56px;
+        }
+
+        .stat-item {
+            text-align: left;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 4px;
+        }
+
+        .btn {
+            padding: 20px 40px;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 1px solid transparent;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--gradient-gold);
+            color: #1a1a1a;
+            box-shadow: var(--shadow-light);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 35px 60px -12px rgba(212,175,55,0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border-color: rgba(255,255,255,0.2);
+            backdrop-filter: blur(20px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-4px);
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 550px;
+            border-radius: 24px;
+            box-shadow: var(--shadow-glass);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        /* SECTIONS */
+        .section {
+            padding: 140px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: clamp(3.5rem, 8vw, 5rem);
+            text-align: center;
+            margin-bottom: 80px;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* SERVICE CATEGORIES */
+        .service-category {
+            margin-bottom: 120px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .category-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 24px;
+            background: var(--gradient-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: #1a1a1a;
+            flex-shrink: 0;
+        }
+
+        .category-title {
+            font-size: 3.5rem;
+            margin-bottom: 12px;
+        }
+
+        .category-subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            max-width: 600px;
+        }
+
+        .services-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 40px;
+        }
+
+        .service-item {
+            padding: 48px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .service-item:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-glass), var(--glow-subtle);
+        }
+
+        .service-item-title {
+            font-size: 1.75rem;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .service-item-text {
+            color: var(--text-secondary);
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .service-features {
+            list-style: none;
+        }
+
+        .service-features li {
+            padding: 12px 0;
+            padding-left: 32px;
+            position: relative;
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .service-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--gold-light);
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            padding: 160px 40px;
+            background: var(--bg-secondary);
+        }
+
+        .cta-title {
+            font-size: clamp(4rem, 10vw, 6rem);
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 24px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 80px;
+                text-align: center;
+            }
+            .hero-stats { justify-content: center; }
+            .services-list { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .section { padding: 100px 24px; }
+            .service-item { padding: 40px 32px; }
+            .category-header { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- FLOATING NAV -->
+    <nav class="floating-nav">
+        <div class="nav-item" data-text="Home" onclick="window.location.href='new.html'">
+            <i class="fas fa-home"></i>
+        </div>
+        <div class="nav-item" data-text="Portfolio" onclick="window.location.href='new.html#portfolio'">
+            <i class="fas fa-image"></i>
+        </div>
+        <div class="nav-item" data-text="Services" onclick="scrollTo('services')">
+            <i class="fas fa-briefcase"></i>
+        </div>
+        <div class="nav-item" data-text="Process" onclick="window.location.href='new.html#process'">
+            <i class="fas fa-list-ol"></i>
+        </div>
+        <div class="nav-item" data-text="About" onclick="window.location.href='new.html#about'">
+            <i class="fas fa-user"></i>
+        </div>
+        <div class="nav-item" data-text="Contact" onclick="window.location.href='new.html#cta'">
+            <i class="fas fa-arrow-up-right-from-square"></i>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero" class="hero">
+        <div class="hero-container">
+            <div>
+                <h1 class="hero-title">Services</h1>
+                <p class="hero-subtitle">Complete Digital Solutions for Premium Brands</p>
+                <p class="hero-subtitle">
+                    From websites that convert to social media that scales — everything your brand needs to dominate online
+                </p>
+                
+              
+
+                <div class="hero-cta">
+                    <a href="#webdev" class="btn btn-primary">Explore Web Development</a>
+                    <a href="#cta" class="btn btn-secondary">Start Project</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=85" alt="Services">
+            </div>
+        </div>
+    </section>
+
+    <!-- WEB DEVELOPMENT -->
+    <section id="webdev" class="section service-category">
+        <div class="category-header">
+            <div class="category-icon">
+                <i class="fas fa-laptop-code"></i>
+            </div>
+            <div>
+                <h2 class="category-title">Web Development</h2>
+                <p class="category-subtitle">I build fast, beautiful, conversion-focused websites that work perfectly on every device</p>
+            </div>
+        </div>
+        <div class="services-list">
+            <div class="service-item">
+                <h3 class="service-item-title">Custom Websites</h3>
+                <p class="service-item-text">From landing pages to full e-commerce stores, I create premium websites that load fast and convert visitors.</p>
+                <ul class="service-features">
+                    <li>WordPress & Wix Velo Development</li>
+                    <li>Fully Responsive Design</li>
+                    <li>SEO Optimized Code</li>
+                    <li>Performance >95 Score</li>
+                    <li>Custom Animations</li>
+                    <li>E-commerce Integration</li>
+                </ul>
+            </div>
+            <div class="service-item">
+                <h3 class="service-item-title">Landing Pages</h3>
+                <p class="service-item-text">High-converting single-page websites designed specifically for your campaign or product launch.</p>
+                <ul class="service-features">
+                    <li>Lead Generation Focus</li>
+                    <li>Fast Load Times</li>
+                    <li>Analytics Integration</li>
+                    <li>Mobile-First Design</li>
+                    <li>Conversion Tracking</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEO -->
+    <section id="seo" class="section service-category">
+        <div class="category-header">
+            <div class="category-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div>
+                <h2 class="category-title">SEO & Growth</h2>
+                <p class="category-subtitle">Technical SEO, keyword research, and growth strategies that drive real organic traffic</p>
+            </div>
+        </div>
+        <div class="services-list">
+            <div class="service-item">
+                <h3 class="service-item-title">Technical SEO Audit</h3>
+                <p class="service-item-text">Complete website analysis to fix issues that are killing your rankings and user experience.</p>
+                <ul class="service-features">
+                    <li>Site Speed Optimization</li>
+                    <li>Core Web Vitals Fix</li>
+                    <li>Schema Markup</li>
+                    <li>XML Sitemap Creation</li>
+                    <li>Robots.txt Optimization</li>
+                    <li>Canonical URL Setup</li>
+                </ul>
+            </div>
+            <div class="service-item">
+                <h3 class="service-item-title">Keyword Strategy</h3>
+                <p class="service-item-text">Research high-intent keywords your customers are searching for and create content that ranks.</p>
+                <ul class="service-features">
+                    <li>Competitor Analysis</li>
+                    <li>Search Volume Research</li>
+                    <li>Content Gap Analysis</li>
+                    <li>Ranking Tracking</li>
+                    <li>Local SEO Setup</li>
+                    <li>Google Business Profile</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOCIAL MEDIA -->
+    <section id="smm" class="section service-category">
+        <div class="category-header">
+            <div class="category-icon">
+                <i class="fab fa-instagram"></i>
+            </div>
+            <div>
+                <h2 class="category-title">Social Media Marketing</h2>
+                <p class="category-subtitle">Instagram growth systems, content calendars, and ad campaigns that turn followers into customers</p>
+            </div>
+        </div>
+        <div class="services-list">
+            <div class="service-item">
+                <h3 class="service-item-title">Instagram Growth</h3>
+                <p class="service-item-text">Complete Instagram strategy from profile optimization to viral content creation.</p>
+                <ul class="service-features">
+                    <li>Profile Audit & Optimization</li>
+                    <li>Content Calendar (30 days)</li>
+                    <li>Hashtag Strategy</li>
+                    <li>Stories & Reels Templates</li>
+                    <li>Engagement Boost Plan</li>
+                    <li>Analytics Dashboard</li>
+                </ul>
+            </div>
+            <div class="service-item">
+                <h3 class="service-item-title">UGC Ad Creatives</h3>
+                <p class="service-item-text">Scroll-stopping video ads and user-generated content that converts at scale.</p>
+                <ul class="service-features">
+                    <li>5-10 Ad Creatives</li>
+                    <li>Video Editing</li>
+                    <li>Hook Copywriting</li>
+                    <li>A/B Test Variants</li>
+                    <li>Platform Optimization</li>
+                    <li>Performance Tracking</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="cta" class="cta-section">
+        <h2 class="cta-title">Ready to Transform Your Online Presence?</h2>
+        <p style="font-size: 22px; color: var(--text-secondary); margin-bottom: 56px; max-width: 600px; margin-left: auto; margin-right: auto;">
+            Pick any service above or tell me about your project. I'll create a custom proposal with exact deliverables and timeline.
+        </p>
+        <div style="display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;">
+            <a href="https://wa.me/919945707547" class="btn btn-primary" style="background: #25D366; border-color: #25D366;">
+                <i class="fab fa-whatsapp"></i> WhatsApp Now
+            </a>
+            <a href="mailto:neha.nehu456@gamil.com" class="btn btn-secondary">
+                <i class="fas fa-envelope"></i> Get Proposal
+            </a>
+        </div>
+    </section>
+
+    <script>
+        function scrollTo(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Smooth scroll for all links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) scrollTo(target.id);
+            });
+        });
+
+        // Subtle scroll effects
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroImg = document.querySelector('.hero-image img');
+            if (heroImg) {
+                heroImg.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
